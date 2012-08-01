@@ -23,16 +23,16 @@ def process (url,fnprefix)
 			maxstr=html_doc.at_xpath("/html/body/div/div/table/tr/td/div[@class='navBarLinks']/a[text()='>>']")
 			maxpag=maxstr.attributes['href'].to_s.gsub(/.html$/,'').to_i
 			$stderr.puts "Number of pages: "+maxpag.to_s
-		end
 
-		# header for CSV files
-		html_doc.xpath("/html/body/div/div/table[@class='dataTable']/tr[@class='tableHeader']/td").each_with_index {|hdr,index|
-			csvf.print '"'+hdr.content+'"'
-			if index < hdr.parent.element_children.length - 1 then
-				csvf.print ";"
-			end
-		}
-		csvf.puts
+			# header for CSV files
+			html_doc.xpath("/html/body/div/div/table[@class='dataTable']/tr[@class='tableHeader']/td").each_with_index {|hdr,index|
+				csvf.print '"'+hdr.content+'"'
+				if index < hdr.parent.element_children.length - 1 then
+					csvf.print ";"
+				end
+			}
+			csvf.puts
+		end
 
 		# data itself
 		html_doc.xpath("/html/body/div/div/table[@class='dataTable']/tr[@class='evenRow' or @class='oddRow']").each {|row|
